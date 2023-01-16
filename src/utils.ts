@@ -20,5 +20,7 @@ const subscribeToUIVisible = (onChange: () => void) =>
   });
 
 export const useAppVisible = () => {
-  return React.useSyncExternalStore(subscribeToUIVisible, () => _visible);
+  return React.useSyncExternalStore(subscribeToUIVisible, () =>
+    process.env.NODE_ENV !== "production" ? true : _visible
+  );
 };
