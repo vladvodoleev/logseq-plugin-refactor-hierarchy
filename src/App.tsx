@@ -1,54 +1,20 @@
 import { PageEntity } from "@logseq/libs/dist/LSPlugin";
 import React, { useEffect, useRef, useState } from "react";
 import { getAllPages } from "./getAllPages";
+import { useSetThemeColors } from "./hooks/use-set-theme-colors";
 import { useAppVisible } from "./utils";
 
 function App() {
   const visible = useAppVisible();
+  const setThemeColors = useSetThemeColors();
 
   useEffect(() => {
-    const test = async () => {
-      const appUserConfig = await logseq.App.getUserConfigs();
-      console.log({ appUserConfig });
-
-      // Credits to Yurii Piskun
-      // discord.com/channels/725182569297215569/853262815727976458/1005819283743453214
-
-      // Get RGB from any color space
-      const getRGBValues = (color: string) => {
-        const canvas = document.createElement("canvas");
-        canvas.height = 1;
-        canvas.width = 1;
-        const context = canvas.getContext("2d");
-        context!.fillStyle = color;
-        context!.fillRect(0, 0, 1, 1);
-        const rgbaArray = context!.getImageData(0, 0, 1, 1).data;
-        return `${rgbaArray[0]}, ${rgbaArray[1]}, ${rgbaArray[2]}`;
-      };
-      // Primary colors vars
-      const setPrimaryColorsVars = () => {
-        const primaryTextcolor = getComputedStyle(top!.document.documentElement)
-          .getPropertyValue("--ls-primary-text-color")
-          .trim();
-        // root.style.setProperty(
-        //   "--RGBTextColor",
-        //   getRGBValues(primaryTextcolor)
-        // );
-        const primaryBgcolor = getComputedStyle(top!.document.documentElement)
-          .getPropertyValue("--ls-primary-background-color")
-          .trim();
-        // root.style.setProperty("--RGBBgColor", getRGBValues(primaryBgcolor));
-        console.log({ primaryBgcolor, primaryTextcolor });
-      };
-      setPrimaryColorsVars();
-    };
-
-    test();
-  }, []);
+    setThemeColors();
+  }, [setThemeColors]);
 
   if (visible) {
     return (
-      <main className="backdrop-filter backdrop-blur-md fixed inset-0 flex items-center justify-center">
+      <main className="backdrop-filter backdrop-blur-md fixed inset-0 flex items-center justify-center bg-primary-background">
         <button onClick={() => window.logseq.hideMainUI()}>close</button>
         <RefactorForm />
       </main>
@@ -97,7 +63,9 @@ function RefactorForm() {
 
   return (
     <form>
-      <label htmlFor="match">Enter match text</label>
+      <label className="text-primary-text" htmlFor="match">
+        Enter match text
+      </label>
       <input id="match" ref={inputRef} />
       <button onClick={onFindMatchClick}>Find match</button>
       {state.matchingPages && (
