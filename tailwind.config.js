@@ -5,10 +5,10 @@ const properties = require("./src/shared/properties");
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      "primary-text": `rgb(var(${properties.text}) / <alpha-value>)`,
-      "primary-background": `rgb(var(${properties.background}) / <alpha-value>)`,
-    },
+    colors: Object.entries(properties).reduce((acc, [prop, val]) => {
+      acc[prop] = `rgb(var(${val}) / <alpha-value>)`;
+      return acc;
+    }, {}),
   },
   plugins: [],
 };
