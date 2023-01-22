@@ -13,10 +13,21 @@ function getColorChannels(inputColor: string) {
 }
 
 const getThemeColors = (propertyNames: Array<string>) => {
-  return propertyNames.reduce((acc, property) => {
-    acc[property] = getColorChannels(getColor(property));
-    return acc;
-  }, {} as Record<string, string>);
+  console.log(propertyNames);
+  try {
+    return propertyNames.reduce((acc, property) => {
+      acc[property] = getColorChannels(getColor(property));
+      return acc;
+    }, {} as Record<string, string>);
+  } catch (e) {
+    console.log(e);
+  }
+
+  return {
+    "--ls-primary-text-color": "164 181 182",
+    "--ls-primary-background-color": "0 43 54",
+    "--ls-link-text-color": "138 187 187",
+  };
 };
 
 export { getThemeColors };

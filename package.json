@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "@logseq/libs": "^0.0.10",
+    "@radix-ui/react-dialog": "^1.0.2",
+    "@radix-ui/react-icons": "^1.1.1",
     "@types/color": "^3.0.3",
     "color": "^4.2.3",
     "color-convert": "^2.0.1",

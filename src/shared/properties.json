@@ -1,4 +1,5 @@
 {
   "primary-text": "--ls-primary-text-color",
-  "primary-background": "--ls-primary-background-color"
+  "primary-background": "--ls-primary-background-color",
+  "primary-link": "--ls-link-text-color"
 }

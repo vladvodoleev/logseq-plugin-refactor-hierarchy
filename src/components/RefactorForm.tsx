@@ -1,27 +1,6 @@
 import { PageEntity } from "@logseq/libs/dist/LSPlugin";
 import React, { useEffect, useRef, useState } from "react";
-import { getAllPages } from "./getAllPages";
-import { useSetThemeColors } from "./hooks/use-set-theme-colors";
-import { useAppVisible } from "./utils";
-
-function App() {
-  const visible = useAppVisible();
-  const setThemeColors = useSetThemeColors();
-
-  useEffect(() => {
-    setThemeColors();
-  }, [setThemeColors]);
-
-  if (visible) {
-    return (
-      <main className="backdrop-filter backdrop-blur-md fixed inset-0 flex items-center justify-center bg-primary-background">
-        <button onClick={() => window.logseq.hideMainUI()}>close</button>
-        <RefactorForm />
-      </main>
-    );
-  }
-  return null;
-}
+import { getAllPages } from "../shared/api";
 
 type pagesState = {
   allPages: Array<PageEntity>;
@@ -50,7 +29,7 @@ function useGetPages() {
   return { state: pages, getMatchingPages };
 }
 
-function RefactorForm() {
+export default function RefactorForm() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { state, getMatchingPages } = useGetPages();
 
@@ -78,5 +57,3 @@ function RefactorForm() {
     </form>
   );
 }
-
-export default App;

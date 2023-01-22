@@ -2,7 +2,7 @@ import "@logseq/libs";
 
 import React from "react";
 import * as ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./components/App";
 import "./index.css";
 
 import { logseq as PL } from "../package.json";
@@ -57,4 +57,12 @@ function main() {
   });
 }
 
+if (process.env.NODE_ENV === "development") {
+  const root = ReactDOM.createRoot(document.getElementById("app")!);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
 logseq.ready(main).catch(console.error);
