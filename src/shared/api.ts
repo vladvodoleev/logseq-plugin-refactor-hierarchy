@@ -1,4 +1,4 @@
-import { PageEntity } from "@logseq/libs/dist/LSPlugin";
+import { PageEntity } from '@logseq/libs/dist/LSPlugin';
 
 export async function getAllPages(): Promise<Array<PageEntity>> {
   try {
@@ -9,10 +9,7 @@ export async function getAllPages(): Promise<Array<PageEntity>> {
   }
 }
 
-export async function renamePage(
-  oldName: string,
-  newName: string
-): Promise<void> {
+export async function renamePage(oldName: string, newName: string): Promise<void> {
   try {
     await logseq.Editor.renamePage(oldName, newName);
   } catch (e) {

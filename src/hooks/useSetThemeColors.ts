@@ -1,5 +1,5 @@
-import { getThemeColors } from "../shared/getThemeColors";
-import properties from "../shared/properties.json";
+import { getThemeColors } from '../shared/getThemeColors';
+import properties from '../shared/properties.json';
 
 export function useSetThemeColors() {
   const setThemeColors = () => {
@@ -7,10 +7,7 @@ export function useSetThemeColors() {
     const themeColors = getThemeColors(propertiesArray);
 
     propertiesArray.forEach((property) => {
-      document.documentElement.style.setProperty(
-        property,
-        themeColors[property]
-      );
+      document.documentElement.style.setProperty(property, themeColors[property]);
     });
   };
 

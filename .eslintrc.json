@@ -1,11 +1,23 @@
 {
   "extends": [
+    "airbnb",
+    "airbnb-typescript",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:tailwindcss/recommended",
+    "prettier"
   ],
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "logseq": true
+  },
+  "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "parser": "@typescript-eslint/parser",
   "rules": {
     "react-hooks/rules-of-hooks": "error",
@@ -13,6 +25,7 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prettier/prettier": ["error"]
   }
 }

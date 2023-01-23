@@ -1,7 +1,7 @@
-import { LSPluginUserEvents } from "@logseq/libs/dist/LSPlugin.user";
-import React from "react";
+import { LSPluginUserEvents } from '@logseq/libs/dist/LSPlugin.user';
+import React from 'react';
 
-let _visible = logseq.isMainUIVisible;
+let isVisible = logseq.isMainUIVisible;
 
 function subscribeLogseqEvent<T extends LSPluginUserEvents>(
   eventName: T,
@@ -14,13 +14,12 @@ function subscribeLogseqEvent<T extends LSPluginUserEvents>(
 }
 
 const subscribeToUIVisible = (onChange: () => void) =>
-  subscribeLogseqEvent("ui:visible:changed", ({ visible }) => {
-    _visible = visible;
+  subscribeLogseqEvent('ui:visible:changed', ({ visible }) => {
+    isVisible = visible;
     onChange();
   });
 
-export const useAppVisible = () => {
-  return React.useSyncExternalStore(subscribeToUIVisible, () =>
-    process.env.NODE_ENV !== "production" ? true : _visible
+export const useAppVisible = () =>
+  React.useSyncExternalStore(subscribeToUIVisible, () =>
+    process.env.NODE_ENV !== 'production' ? true : isVisible
   );
-};

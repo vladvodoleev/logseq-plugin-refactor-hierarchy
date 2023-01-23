@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useSetThemeColors } from "../hooks/use-set-theme-colors";
-import { useAppVisible } from "../utils";
-import Popup from "./Popup";
-import RefactorForm from "./RefactorForm";
+import React, { useEffect } from 'react';
+import { useSetThemeColors } from '../hooks/useSetThemeColors';
+import { useAppVisible } from '../utils';
+import Popup from './Popup';
+import RefactorForm from './RefactorForm';
 
-function App() {
+export default function App() {
   const visible = useAppVisible();
   const onClose = () => window.logseq.hideMainUI();
   const setThemeColors = useSetThemeColors();
@@ -19,5 +19,3 @@ function App() {
     </Popup>
   );
 }
-
-export default App;

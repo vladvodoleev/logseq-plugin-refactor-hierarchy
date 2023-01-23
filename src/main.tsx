@@ -1,11 +1,11 @@
-import "@logseq/libs";
+import '@logseq/libs';
 
-import React from "react";
-import * as ReactDOM from "react-dom/client";
-import App from "./components/App";
-import "./index.css";
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import App from './components/App';
+import './index.css';
 
-import { logseq as PL } from "../package.json";
+import { logseq as PL } from '../package.json';
 
 // @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args);
@@ -14,7 +14,7 @@ const pluginId = PL.id;
 
 function main() {
   console.info(`#${pluginId}: MAIN`);
-  const root = ReactDOM.createRoot(document.getElementById("app")!);
+  const root = ReactDOM.createRoot(document.getElementById('app')!);
 
   root.render(
     <React.StrictMode>
@@ -35,7 +35,7 @@ function main() {
     zIndex: 11,
   });
 
-  const openIconName = "template-plugin-open";
+  const openIconName = 'template-plugin-open';
 
   logseq.provideStyle(css`
     .${openIconName} {
@@ -49,7 +49,7 @@ function main() {
     }
   `);
 
-  logseq.App.registerUIItem("toolbar", {
+  logseq.App.registerUIItem('toolbar', {
     key: openIconName,
     template: `
       <div data-on-click="show" class="${openIconName}">⚙️</div>
@@ -57,12 +57,13 @@ function main() {
   });
 }
 
-if (process.env.NODE_ENV === "development") {
-  const root = ReactDOM.createRoot(document.getElementById("app")!);
+if (process.env.NODE_ENV === 'development') {
+  const root = ReactDOM.createRoot(document.getElementById('app')!);
   root.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   );
 }
+
 logseq.ready(main).catch(console.error);
