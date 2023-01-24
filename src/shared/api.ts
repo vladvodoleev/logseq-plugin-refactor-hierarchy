@@ -1,9 +1,12 @@
 import { PageEntity } from '@logseq/libs/dist/LSPlugin';
 
+let allPages: Array<PageEntity>;
+
 export async function getAllPages(): Promise<Array<PageEntity>> {
+  if (allPages) return allPages;
   try {
-    const pages = (await logseq.Editor.getAllPages()) || [];
-    return pages;
+    allPages = (await logseq.Editor.getAllPages()) || [];
+    return allPages;
   } catch (e) {
     return [];
   }

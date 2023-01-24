@@ -11,19 +11,14 @@ function useGetPages() {
   const [pages, setPages] = useState<Partial<PagesState>>({});
 
   const getMatchingPages = async (matchString: string) => {
-    let allPages;
-    if (!pages.allPages) {
-      allPages = await getAllPages();
-      setPages({ allPages });
-    }
-    if (!allPages) return;
+    const allPages = await getAllPages();
 
     const matchRegExp = new RegExp(matchString);
     const matchingPages = allPages.filter((page) => {
       const regExpExecArray = matchRegExp.exec(page.originalName);
       return regExpExecArray ? { ...page, regExpExecArray } : null;
     });
-    setPages({ allPages: pages.allPages, matchingPages });
+    setPages({ allPages, matchingPages });
   };
 
   return { state: pages, getMatchingPages };
