@@ -5,15 +5,12 @@ import * as ReactDOM from 'react-dom/client';
 import App from './components/App';
 import './index.css';
 
-import { logseq as PL } from '../package.json';
+import { logError } from './shared/logError';
 
 // @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args);
 
-const pluginId = PL.id;
-
 function main() {
-  console.info(`#${pluginId}: MAIN`);
   const root = ReactDOM.createRoot(document.getElementById('app')!);
 
   root.render(
@@ -66,4 +63,4 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-logseq.ready(main).catch(console.error);
+logseq.ready(main).catch(logError);

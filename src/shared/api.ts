@@ -1,4 +1,5 @@
 import { PageEntity } from '@logseq/libs/dist/LSPlugin';
+import { logError } from './logError';
 
 let allPages: Array<PageEntity>;
 
@@ -17,5 +18,15 @@ export async function renamePage(oldName: string, newName: string): Promise<void
     await logseq.Editor.renamePage(oldName, newName);
   } catch (e) {
     throw e as Error;
+  }
+}
+
+export async function getCurrentPageOriginalName(): Promise<PageEntity['name']> {
+  try {
+    const currentPage = await logseq.Editor.getCurrentPage();
+    return currentPage?.originalName;
+  } catch (e) {
+    logError(e as Error);
+    return '';
   }
 }
