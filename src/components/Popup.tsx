@@ -18,12 +18,6 @@ export default function Popup({ open, title, onOpenChange }: PopupProps) {
           <div className="flex h-full flex-col justify-around">
             <Dialog.Title className="text-2xl text-primary-text">{title}</Dialog.Title>
             <EnterMatchScreen />
-            <button
-              type="button"
-              className="ml-auto mt-auto block rounded-md bg-primary-link py-2 px-4"
-            >
-              Next
-            </button>
             <Dialog.Close asChild>
               <button type="button" className="absolute top-0 right-0 p-3 text-primary-link">
                 <Cross2Icon />
