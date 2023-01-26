@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function Loader() {
   return (
-    <div role="status">
+    <div role="status" className="flex h-full w-full items-center justify-center">
       <svg
         aria-hidden="true"
-        className="mr-2 h-8 w-8 animate-spin fill-primary-link text-primary-link/10"
+        className="mr-2 h-12 w-12 animate-spin fill-primary-link text-primary-link/10"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
