@@ -5,7 +5,7 @@ import { Label } from './Label';
 import Loader from './Loader';
 
 type EnterMatchScreenProps = {
-  setMatch: (string) => void;
+  setMatch: (match: string) => void;
 };
 
 export default function EnterMatchScreen({ setMatch }: EnterMatchScreenProps) {
@@ -16,7 +16,7 @@ export default function EnterMatchScreen({ setMatch }: EnterMatchScreenProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMatch(inputRef.current || '');
+    setMatch(inputRef.current!.value || '');
   };
 
   return (

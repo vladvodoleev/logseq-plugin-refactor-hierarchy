@@ -1,10 +1,10 @@
 import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 import EnterMatchScreen from './EnterMatchScreen';
 import { AppStep, useGlobalState } from '../hooks/useGlobalState';
 import EnterReplaceScreen from './EnterReplaceScreen';
-import { PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 
 type PopupProps = {
   open: boolean;
@@ -27,6 +27,7 @@ export default function Popup({ open, title, onOpenChange }: PopupProps) {
               step={step}
               handleGoToStep2={handleGoToStep2}
               handleGoToStep3={handleGoToStep3}
+              match={state.match}
             />
             <Dialog.Close asChild>
               <button type="button" className="absolute top-0 right-0 p-3 text-primary-link">
@@ -44,16 +45,18 @@ function StepSwitch({
   step,
   handleGoToStep2,
   handleGoToStep3,
+  match,
 }: {
   step: AppStep;
   handleGoToStep2: (newMatch: string) => void;
   handleGoToStep3: (newPages: PageEntity[], newReplace: string) => void;
+  match: string;
 }) {
   switch (step) {
     case 1:
       return <EnterMatchScreen setMatch={handleGoToStep2} />;
     case 2:
-      return <EnterReplaceScreen setData={handleGoToStep3} />;
+      return <EnterReplaceScreen setData={handleGoToStep3} match={match} />;
     default:
       return null;
   }
