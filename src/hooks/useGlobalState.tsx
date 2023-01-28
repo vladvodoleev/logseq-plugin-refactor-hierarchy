@@ -1,5 +1,5 @@
 import { PageEntity } from '@logseq/libs/dist/LSPlugin.user';
-import { useReducer } from 'react';
+import React, { useReducer, createContext, ReactNode, useMemo, useContext } from 'react';
 
 export type AppStep = 1 | 2 | 3;
 
@@ -52,7 +52,18 @@ function globalReducer(state: GlobalState, action: GlobalActions): GlobalState {
   }
 }
 
-export function useGlobalState() {
+type GoToStep2Function = (match: string) => void;
+type GoToStep3Function = (pages: Array<PageEntity>, replace: string) => void;
+
+type GlobalStateContextValue = {
+  state: GlobalState;
+  handleGoToStep2: GoToStep2Function;
+  handleGoToStep3: GoToStep3Function;
+};
+
+const GlobalStateContext = createContext<GlobalStateContextValue>({} as GlobalStateContextValue);
+
+function GlobalStateProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(globalReducer, initialGlobalState);
 
   function handleGoToStep2(newMatch: string): void {
@@ -63,9 +74,24 @@ export function useGlobalState() {
     dispatch({ type: 'GO_TO_STEP_3', pages: newPages, replace: newReplace });
   }
 
-  return {
-    state,
-    handleGoToStep2,
-    handleGoToStep3,
-  };
+  const value = useMemo(
+    () => ({
+      state,
+      handleGoToStep2,
+      handleGoToStep3,
+    }),
+    [state]
+  );
+
+  return <GlobalStateContext.Provider value={value}>{children}</GlobalStateContext.Provider>;
 }
+
+function useGlobalState() {
+  const context = useContext(GlobalStateContext);
+  if (context === undefined) {
+    throw new Error('useGlobalState must be used within a GlobalStateContext');
+  }
+  return context;
+}
+
+export { GlobalStateProvider, useGlobalState };

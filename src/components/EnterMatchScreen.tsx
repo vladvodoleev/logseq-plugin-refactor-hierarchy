@@ -1,14 +1,12 @@
 import React, { useRef } from 'react';
 import { useDefaultMatch } from '../hooks/useDefaultMatch';
+import { useGlobalState } from '../hooks/useGlobalState';
 import Input from './Input';
 import { Label } from './Label';
 import Loader from './Loader';
 
-type EnterMatchScreenProps = {
-  setMatch: (match: string) => void;
-};
-
-export default function EnterMatchScreen({ setMatch }: EnterMatchScreenProps) {
+export default function EnterMatchScreen() {
+  const { handleGoToStep2 } = useGlobalState();
   const { isLoading, match } = useDefaultMatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -16,7 +14,7 @@ export default function EnterMatchScreen({ setMatch }: EnterMatchScreenProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMatch(inputRef.current!.value || '');
+    handleGoToStep2(inputRef.current!.value || '');
   };
 
   return (

@@ -1,20 +1,25 @@
 import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 import EnterMatchScreen from './EnterMatchScreen';
 import { AppStep, useGlobalState } from '../hooks/useGlobalState';
 import EnterReplaceScreen from './EnterReplaceScreen';
 
 type PopupProps = {
   open: boolean;
-  title: string;
   onOpenChange: () => void;
 };
 
-export default function Popup({ open, title, onOpenChange }: PopupProps) {
-  const { state, handleGoToStep2, handleGoToStep3 } = useGlobalState();
-  const { step } = state;
+const titles: Record<AppStep, string> = {
+  1: 'Enter match text',
+  2: 'Enter replace text',
+  3: 'Confirm following renaming',
+};
+
+export default function Popup({ open, onOpenChange }: PopupProps) {
+  const {
+    state: { step },
+  } = useGlobalState();
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -22,13 +27,8 @@ export default function Popup({ open, title, onOpenChange }: PopupProps) {
         <Dialog.Overlay className="h-screen w-screen bg-[#000000]/40 backdrop-blur-md" />
         <Dialog.Content className="fixed left-1/2 top-1/2 h-1/2 w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-md bg-primary-background p-8">
           <div className="flex h-full flex-col">
-            <Dialog.Title className="text-2xl text-primary-text">{title}</Dialog.Title>
-            <StepSwitch
-              step={step}
-              handleGoToStep2={handleGoToStep2}
-              handleGoToStep3={handleGoToStep3}
-              match={state.match}
-            />
+            <Dialog.Title className="text-2xl text-primary-text">{titles[step]}</Dialog.Title>
+            <StepSwitch step={step} />
             <Dialog.Close asChild>
               <button type="button" className="absolute top-0 right-0 p-3 text-primary-link">
                 <Cross2Icon />
@@ -41,22 +41,12 @@ export default function Popup({ open, title, onOpenChange }: PopupProps) {
   );
 }
 
-function StepSwitch({
-  step,
-  handleGoToStep2,
-  handleGoToStep3,
-  match,
-}: {
-  step: AppStep;
-  handleGoToStep2: (newMatch: string) => void;
-  handleGoToStep3: (newPages: PageEntity[], newReplace: string) => void;
-  match: string;
-}) {
+function StepSwitch({ step }: { step: AppStep }) {
   switch (step) {
     case 1:
-      return <EnterMatchScreen setMatch={handleGoToStep2} />;
+      return <EnterMatchScreen />;
     case 2:
-      return <EnterReplaceScreen setData={handleGoToStep3} match={match} />;
+      return <EnterReplaceScreen />;
     default:
       return null;
   }

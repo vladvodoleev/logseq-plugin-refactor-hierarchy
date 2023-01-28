@@ -1,17 +1,15 @@
 import React, { useRef } from 'react';
-import { PageEntityWithRegexMatch, useMatchingPages } from '../hooks/useMatchingPages';
-// import { useDefaultMatch } from '../hooks/useDefaultMatch';
+import { useGlobalState } from '../hooks/useGlobalState';
+import { useMatchingPages } from '../hooks/useMatchingPages';
 import Input from './Input';
 import { Label } from './Label';
 import Loader from './Loader';
-// import Loader from './Loader';
 
-type EnterReplaceScreenProps = {
-  setData: (newPages: PageEntityWithRegexMatch[], newReplace: string) => void;
-  match: string;
-};
-
-export default function EnterReplaceScreen({ setData, match }: EnterReplaceScreenProps) {
+export default function EnterReplaceScreen() {
+  const {
+    handleGoToStep3,
+    state: { match },
+  } = useGlobalState();
   const { isLoading, matchingPages } = useMatchingPages(match);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +19,7 @@ export default function EnterReplaceScreen({ setData, match }: EnterReplaceScree
     e.preventDefault();
     const replaceString = inputRef.current!.value;
     if (!replaceString) return;
-    setData(matchingPages, replaceString);
+    handleGoToStep3(matchingPages, replaceString);
   };
 
   return (
