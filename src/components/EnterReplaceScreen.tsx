@@ -4,6 +4,8 @@ import { useMatchingPages } from '../hooks/useMatchingPages';
 import Input from './Input';
 import { Label } from './Label';
 import Loader from './Loader';
+import PageNameText from './PageNameText';
+import PageName from './PageNameText';
 
 export default function EnterReplaceScreen() {
   const {
@@ -27,20 +29,13 @@ export default function EnterReplaceScreen() {
       <fieldset className="">
         <Label htmlFor="name" className="flex-col text-primary-text">
           <span className="block text-lg">Replace text</span>
-          <Input id="name" autoFocus />
+          <Input id="name" autoFocus ref={inputRef} />
           <p className="mt-2 w-full text-sm">This will replace the matched portion of page name</p>
           <ul>
             {matchingPages.map((page) => (
-              <li
-                key={page.originalName}
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                  __html: page.originalName.replace(
-                    match,
-                    `<span class='text-primary-link'>${match}</span>`
-                  ),
-                }}
-              />
+              <li key={page.originalName}>
+                <PageNameText pageName={page.originalName} match={match} replace={match} />
+              </li>
             ))}
           </ul>
         </Label>

@@ -4,6 +4,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import EnterMatchScreen from './EnterMatchScreen';
 import { AppStep, useGlobalState } from '../hooks/useGlobalState';
 import EnterReplaceScreen from './EnterReplaceScreen';
+import RenameConfirmScreen from './RenameConfirmScreen';
 
 type PopupProps = {
   open: boolean;
@@ -47,6 +48,8 @@ function StepSwitch({ step }: { step: AppStep }) {
       return <EnterMatchScreen />;
     case 2:
       return <EnterReplaceScreen />;
+    case 3:
+      return <RenameConfirmScreen />;
     default:
       return null;
   }
