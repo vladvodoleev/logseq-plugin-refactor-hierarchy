@@ -20,6 +20,8 @@ export default function EnterReplaceScreen() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const replaceString = inputRef.current!.value;
+    // eslint-disable-next-line no-debugger
+    debugger;
     if (!replaceString) return;
     handleGoToStep3(matchingPages, replaceString);
   };
@@ -40,7 +42,7 @@ export default function EnterReplaceScreen() {
           </ul>
         </Label>
       </fieldset>
-      <button type="button" className="ml-auto mt-auto block rounded-md bg-primary-link py-2 px-4">
+      <button type="submit" className="ml-auto mt-auto block rounded-md bg-primary-link py-2 px-4">
         Next
       </button>
     </form>
