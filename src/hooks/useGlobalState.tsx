@@ -1,5 +1,6 @@
 import { PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 import React, { useReducer, createContext, ReactNode, useMemo, useContext } from 'react';
+import { PageEntityWithRegexMatch } from './useMatchingPages';
 
 export type AppStep = 1 | 2 | 3;
 
@@ -7,7 +8,7 @@ type GlobalState = {
   step: AppStep;
   match: string;
   replace: string;
-  pages: Array<PageEntity>;
+  pages: Array<PageEntityWithRegexMatch>;
 };
 
 const initialGlobalState: GlobalState = {
@@ -25,7 +26,7 @@ type GoToStep2Action = {
 type GoToStep3Action = {
   type: 'GO_TO_STEP_3';
   replace: string;
-  pages: Array<PageEntity>;
+  pages: Array<PageEntityWithRegexMatch>;
 };
 
 // for prev steps can use GO_BACK_TO_STEP_1
@@ -70,7 +71,7 @@ function GlobalStateProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'GO_TO_STEP_2', match: newMatch });
   }
 
-  function handleGoToStep3(newPages: Array<PageEntity>, newReplace: string): void {
+  function handleGoToStep3(newPages: Array<PageEntityWithRegexMatch>, newReplace: string): void {
     dispatch({ type: 'GO_TO_STEP_3', pages: newPages, replace: newReplace });
   }
 
@@ -81,7 +82,7 @@ function GlobalStateProvider({ children }: { children: ReactNode }) {
       handleGoToStep3,
     }),
     [state]
-  );
+  ) as GlobalStateContextValue;
 
   return <GlobalStateContext.Provider value={value}>{children}</GlobalStateContext.Provider>;
 }
