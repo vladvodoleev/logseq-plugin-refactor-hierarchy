@@ -1,18 +1,18 @@
 import React, { useRef } from 'react';
-import { useGlobalState } from '../hooks/useGlobalState';
-import { useMatchingPages } from '../hooks/useMatchingPages';
+import { useGetPages } from '../hooks/useGetPages';
 import Input from './Input';
 import { Label } from './Label';
 import Loader from './Loader';
 import PageNameText from './PageNameText';
-import PageName from './PageNameText';
+import { useMatch } from '../hooks/useMatch';
+import { useReplace } from '../hooks/useReplace';
+import { useStep } from '../hooks/useStep';
 
 export default function EnterReplaceScreen() {
-  const {
-    handleGoToStep3,
-    state: { match },
-  } = useGlobalState();
-  const { isLoading, matchingPages } = useMatchingPages(match);
+  const { value: match } = useMatch();
+  const { setValue: setReplace } = useReplace();
+  const { setValue: setStep } = useStep();
+  const { isLoading, pages } = useGetPages(match);
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (isLoading) return <Loader />;
@@ -20,10 +20,9 @@ export default function EnterReplaceScreen() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const replaceString = inputRef.current!.value;
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (!replaceString) return;
-    handleGoToStep3(matchingPages, replaceString);
+    setReplace(replaceString);
+    setStep(3);
   };
 
   return (
@@ -34,7 +33,7 @@ export default function EnterReplaceScreen() {
           <Input id="name" autoFocus ref={inputRef} />
           <p className="mt-2 w-full text-sm">This will replace the matched portion of page name</p>
           <ul>
-            {matchingPages.map((page) => (
+            {pages.map((page) => (
               <li key={page.originalName}>
                 <PageNameText pageName={page.originalName} match={match} replace={match} />
               </li>

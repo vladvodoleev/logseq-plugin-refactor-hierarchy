@@ -33,7 +33,7 @@ function getThemeColorsFromHost(propertyNames: Array<string>) {
   return defaultThemeColors;
 }
 
-function setThemeColorsToApp() {
+export function setThemeColorsToApp() {
   const propertiesArray = Object.values(properties);
   const themeColors = getThemeColorsFromHost(propertiesArray);
 
@@ -41,5 +41,3 @@ function setThemeColorsToApp() {
     document.documentElement.style.setProperty(property, themeColors[property]);
   });
 }
-
-export { setThemeColorsToApp };
