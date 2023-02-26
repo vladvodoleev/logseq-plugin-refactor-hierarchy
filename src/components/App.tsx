@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppOpen } from '../hooks/useAppOpen';
-import { GlobalStateProvider } from '../hooks/useGlobalState';
 import { setThemeColorsToApp } from '../shared/themeColors';
+import { Providers } from './AppProviders';
 import Popup from './Popup';
 
 export default function App() {
@@ -14,8 +14,8 @@ export default function App() {
   if (!isOpen) return null;
 
   return (
-    <GlobalStateProvider>
-      <Popup open={isOpen} onOpenChange={handleClose} />;
-    </GlobalStateProvider>
+    <Providers>
+      <Popup open={isOpen} onOpenChange={handleClose} />
+    </Providers>
   );
 }

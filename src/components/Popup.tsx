@@ -2,25 +2,23 @@ import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import EnterMatchScreen from './EnterMatchScreen';
-import { AppStep, useGlobalState } from '../hooks/useGlobalState';
 import EnterReplaceScreen from './EnterReplaceScreen';
 import RenameConfirmScreen from './RenameConfirmScreen';
+import { Step, useStep } from '../hooks/useStep';
 
 type PopupProps = {
   open: boolean;
   onOpenChange: () => void;
 };
 
-const titles: Record<AppStep, string> = {
+const titles: Record<Step, string> = {
   1: 'Enter match text',
   2: 'Enter replace text',
   3: 'Confirm following renaming',
 };
 
 export default function Popup({ open, onOpenChange }: PopupProps) {
-  const {
-    state: { step },
-  } = useGlobalState();
+  const { value: step } = useStep();
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -42,7 +40,7 @@ export default function Popup({ open, onOpenChange }: PopupProps) {
   );
 }
 
-function StepSwitch({ step }: { step: AppStep }) {
+function StepSwitch({ step }: { step: Step }) {
   switch (step) {
     case 1:
       return <EnterMatchScreen />;

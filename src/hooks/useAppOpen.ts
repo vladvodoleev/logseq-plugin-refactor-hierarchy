@@ -17,14 +17,10 @@ export function useAppOpen() {
 }
 
 function subscribeToUIVisible(onChange: () => void) {
-  subscribeLogseqEvent('ui:visible:changed', ({ visible }) => {
+  return subscribeLogseqEvent('ui:visible:changed', ({ visible }) => {
     isVisible = visible;
     onChange();
   });
-
-  // don't really need an unsubscribe cleanup function here
-  // TODO: how do I ignore this?
-  return () => {};
 }
 
 function subscribeLogseqEvent<T extends LSPluginUserEvents>(
